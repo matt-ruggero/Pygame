@@ -17,3 +17,20 @@ class Ground(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         if self.rect.right < 0:
             self.rect.x = WIDTH
+
+class Roof(pygame.sprite.Sprite):
+    def __init__(self, img):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.x = 300
+        self.rect.y = 0
+        self.speedx = -1
+
+    def update(self):
+        # Atualizando a posição do chão
+        self.rect.x += self.speedx
+        if self.rect.right < 0:
+            self.rect.x = WIDTH
