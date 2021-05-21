@@ -1,10 +1,10 @@
 from assets import *
-import pygame
+import pygame 
+import random
 
 class Ground(pygame.sprite.Sprite):
-    def __init__(self, img):
-        # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+    def _init_(self, img):
+        pygame.sprite.Sprite._init_(self)
 
         self.image = img
         self.rect = self.image.get_rect()
@@ -13,32 +13,28 @@ class Ground(pygame.sprite.Sprite):
         self.speedx = -1
 
     def update(self):
-        # Atualizando a posição do chão
         self.rect.x += self.speedx
         if self.rect.right < 0:
             self.rect.x = WIDTH
 
 class Roof(pygame.sprite.Sprite):
-    def __init__(self, img):
-        # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+    def _init_(self, img):
+        pygame.sprite.Sprite._init_(self)
 
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.x = 300
+        self.rect.x = 0
         self.rect.y = 0
         self.speedx = -1
 
     def update(self):
-        # Atualizando a posição do chão
         self.rect.x += self.speedx
         if self.rect.right < 0:
             self.rect.x = WIDTH
 
 class Astronaut(pygame.sprite.Sprite):
-    def __init__(self, img):
-        # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+    def _init_(self, img):
+        pygame.sprite.Sprite._init_(self)
 
         self.image = img
         self.rect = self.image.get_rect()
@@ -52,7 +48,6 @@ class Astronaut(pygame.sprite.Sprite):
         self.speedy = 1
 
     def update(self):
-        # Atualização da posição do astronauta
         self.rect.y += self.speedy
 
         # Mantem dentro da tela
@@ -62,3 +57,19 @@ class Astronaut(pygame.sprite.Sprite):
         if self.rect.bottom >= 270:
             self.rect.bottom = 270
             self.speedy = 0
+
+class Tanque(pygame.sprite.Sprite):
+    def _init_(self, img):
+        pygame.sprite.Sprite._init_(self)
+
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.x = 800
+        self.rect.y = random.randint(80, 230)
+        self.speedx = - 1
+
+    def update(self):
+        self.rect.x += self.speedx
+        if self.rect.right < 0:
+            self.rect.x = WIDTH
+            self.rect.y = random.randint(80, 230)
