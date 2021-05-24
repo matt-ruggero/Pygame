@@ -1,6 +1,8 @@
+#Importa e inicializa os pacotes
 import pygame
 from classes import *
 from assets import *
+
 
 pygame.init()
 
@@ -15,11 +17,20 @@ astronaut_img = pygame.image.load('imagens/astronauta_novo.png').convert_alpha()
 astronaut = pygame.transform.scale(astronaut_img, (ASTRO_WIDTH, ASTRO_HEIGHT))
 tanque_o2_img = pygame.image.load('imagens/o2.png')
 tanque_o2 = pygame.transform.scale(tanque_o2_img, (TANQUE_WIDTH, TANQUE_HEIGHT))
-meteoro_img = pygame.image.load('imagens/pedra_azul.png').convert_alpha()
+meteoro_img = pygame.image.load('imagens/pedra.png').convert_alpha()
 meteoro = pygame.transform.scale(meteoro_img, (METEORO_WIDTH, METEORO_HEIGHT))
 
-score = 0
-font = pygame.font.SysFont('Verdana', 20)
+#########
+mov1_img = pygame.image.load('imagens/movimento1.png').convert_alpha()
+mov1 = pygame.transform.scale(mov1_img, (ASTRO_WIDTH, ASTRO_HEIGHT))
+mov2_img = pygame.image.load('imagens/movimento2.png').convert_alpha()
+mov2 = pygame.transform.scale(mov2_img, (ASTRO_WIDTH, ASTRO_HEIGHT))
+andando_anim = []
+andando_anim.append(mov1)
+andando_anim.append(astronaut)
+andando_anim.append(mov2)
+#########
+
 
 game = True
 
@@ -45,10 +56,12 @@ for i in range(3):
     meteor = Meteoro(meteoro)
     all_meteoros.add(meteor)
 
-astronauta = Astronaut(astronaut)
+###
+astronauta = Astronaut(andando_anim)
 tanque = Tanque(tanque_o2)
 tanques.add(tanque)
 
+#Loop principal
 while game:
     clock.tick(FPS)
     for event in pygame.event.get():
@@ -59,11 +72,6 @@ while game:
                 astronauta.jump()
             if event.key == pygame.K_DOWN:
                 astronauta.fall()
-
-    if astronauta.rect.centerx == 40:
-        game = False
-    
-    texto = font.render('Pontuação: {0}'.format(score), True, (255, 255, 255))
 
     all_grounds.update()
     all_roofs.update()
@@ -76,23 +84,20 @@ while game:
     for tanque in hits:
         t = Tanque(tanque_o2)
         tanques.add(t)
-        score += 10
+    
+    hits = pygame.sprite.spritecollide(astronauta, all_meteoros, False, pygame.sprite.collide_mask)
+    if len(hits) > 0:
+        game = False
 
-    hits = pygame.sprite.spritecollide(astronauta, all_meteoros, True, pygame.sprite.collide_mask)
-
-    for meteor in hits:
-        astronauta.rect.x -= 20
-        m = Meteoro(meteoro)
-        all_meteoros.add(m)
-
-    window.fill((0, 0, 0))
+    #Gera saídas
+    window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
     window.blit(astronauta.image, astronauta.rect)
     tanques.draw(window)
     all_meteoros.draw(window)
     all_grounds.draw(window)
     all_roofs.draw(window)
-    window.blit(texto, (10,10))
     pygame.display.update()
 
+#Finaliza o pygame
 pygame.quit()
