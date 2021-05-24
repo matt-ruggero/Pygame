@@ -38,7 +38,7 @@ class Astronaut(pygame.sprite.Sprite):
 
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.centerx = 100
+        self.rect.centerx = 150
         self.rect.bottom = 300
         self.speedy = 0
     

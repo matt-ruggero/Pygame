@@ -17,6 +17,8 @@ tanque_o2_img = pygame.image.load('imagens/o2.png')
 tanque_o2 = pygame.transform.scale(tanque_o2_img, (TANQUE_WIDTH, TANQUE_HEIGHT))
 meteoro_img = pygame.image.load('imagens/pedra_azul.png').convert_alpha()
 meteoro = pygame.transform.scale(meteoro_img, (METEORO_WIDTH, METEORO_HEIGHT))
+monstro_img = pygame.image.load('imagens/monstro.png')
+monstro = pygame.transform.scale(monstro_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
 
 score = 0
 font = pygame.font.SysFont('Verdana', 20)
@@ -41,7 +43,7 @@ for i in range(0, 650, 50):
     pedra.rect.x += i
     all_roofs.add(pedra)
 
-for i in range(3):
+for i in range(4):
     meteor = Meteoro(meteoro)
     all_meteoros.add(meteor)
 
@@ -60,7 +62,7 @@ while game:
             if event.key == pygame.K_DOWN:
                 astronauta.fall()
 
-    if astronauta.rect.centerx == 40:
+    if astronauta.rect.centerx == 90:
         game = False
     
     texto = font.render('Pontuação: {0}'.format(score), True, (255, 255, 255))
@@ -92,6 +94,7 @@ while game:
     all_meteoros.draw(window)
     all_grounds.draw(window)
     all_roofs.draw(window)
+    window.blit(monstro, (-20,0))
     window.blit(texto, (10,10))
     pygame.display.update()
 
