@@ -61,6 +61,11 @@ class Tanque(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
 
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.x = WIDTH
+        self.rect.y = random.randint(50, 230)
+
         self.speedx = - 1
 
     def update(self):
