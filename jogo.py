@@ -3,6 +3,7 @@ from classes import *
 from assets import *
 
 pygame.init()
+pygame.mixer.init()
 
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Zero Gravity Run')
@@ -19,6 +20,13 @@ meteoro_img = pygame.image.load('imagens/pedra_azul.png').convert_alpha()
 meteoro = pygame.transform.scale(meteoro_img, (METEORO_WIDTH, METEORO_HEIGHT))
 monstro_img = pygame.image.load('imagens/monstro.png')
 monstro = pygame.transform.scale(monstro_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
+
+# Carrega os sons do jogo
+pygame.mixer.music.load('audios/space.mp3')
+pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.play(-1)
+meteoro_sound = pygame.mixer.Sound('audios/impact.mp3')
+oxygen_sound = pygame.mixer.Sound('audios/oxygen1.mp3')
 
 score = 0
 font = pygame.font.SysFont('Verdana', 20)
@@ -79,6 +87,7 @@ while game:
         t = Tanque(tanque_o2)
         tanques.add(t)
         score += 10
+        oxygen_sound.play()
 
     hits = pygame.sprite.spritecollide(astronauta, all_meteoros, True, pygame.sprite.collide_mask)
 
@@ -86,6 +95,7 @@ while game:
         astronauta.rect.x -= 20
         m = Meteoro(meteoro)
         all_meteoros.add(m)
+        meteoro_sound.play()
 
     window.fill((0, 0, 0))
     window.blit(background, (0, 0))
