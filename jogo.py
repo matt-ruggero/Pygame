@@ -18,17 +18,12 @@ def draw_text(text, font, color, surface, x, y):
 click = False
  
 def main_menu():
-    while True:
+    x = True
+    while x:
         mx, my = pygame.mouse.get_pos()
  
         button_1 = pygame.Rect(240, 200, 100, 15)
         button_2 = pygame.Rect(240, 230, 100, 15)
-        if button_1.collidepoint((mx, my)):
-            if click:
-                game()
-        if button_2.collidepoint((mx, my)):
-            if click:
-                pygame.quit()
         menu_img = pygame.image.load('imagens/menu.jpeg').convert()
         window.blit(menu_img, [0, 0])
         menu = pygame.transform.scale(menu_img, (WIDTH, HEIGHT))
@@ -36,7 +31,8 @@ def main_menu():
         pygame.draw.rect(window, (200, 69, 69,), button_2)
         draw_text('click to start', font, (255, 255, 255), window, 250, 200)
         draw_text('quit game',font,(255,255,255),window,258,230)
-        click = False
+        pygame.display.update()
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -44,8 +40,18 @@ def main_menu():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
+    
+        if button_1.collidepoint((mx, my)):
+            if click:
+                game()
+                x = False
+        if button_2.collidepoint((mx, my)):
+            if click:
+                pygame.quit()
+                sys.exit()
+                x = False
+        click = False
  
-        pygame.display.update()
         mainClock.tick(60)
  
 def game():
@@ -156,7 +162,6 @@ def game():
             pygame.display.update()
 
         pygame.quit()
-        
-        pygame.display.update()
         mainClock.tick(60)
+        running = False
 main_menu()
