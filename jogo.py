@@ -25,13 +25,15 @@ def main_menu():
         button_1 = pygame.Rect(240, 200, 100, 15)
         button_2 = pygame.Rect(240, 230, 100, 15)
         menu_img = pygame.image.load('imagens/menu.jpeg').convert()
-        window.blit(menu_img, [0, 0])
         menu = pygame.transform.scale(menu_img, (WIDTH, HEIGHT))
+        window.blit(menu, [0, 0])
         pygame.draw.rect(window, (150, 69, 255,), button_1)
         pygame.draw.rect(window, (200, 69, 69,), button_2)
         draw_text('click to start', font, (255, 255, 255), window, 250, 200)
         draw_text('quit game',font,(255,255,255),window,258,230)
         pygame.display.update()
+
+        click = False
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -40,20 +42,39 @@ def main_menu():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
+        pontuacao = 0
     
         if button_1.collidepoint((mx, my)):
             if click:
-                game()
+                pontuacao = game()
                 x = False
+                rejogar = True
+                while rejogar:
+                    window.blit(fim, (0, 0))
+                    pygame.mixer.music.play(0)
+                    fonte = pygame.font.SysFont('Verdana', 15)
+                    fonte_2 = pygame.font.SysFont('Verdana', 35)
+                    enter = fonte.render('Pressione SPACE para retornar ao menu principal', True, (255, 255, 255))
+                    pontos = fonte_2.render('Pontuação: {0}'.format(pontuacao), True, (255, 255, 255))
+                    window.blit(enter, (130, 200))
+                    window.blit(pontos, (170,240))
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                            sys.exit()
+                        if event.type == pygame.KEYDOWN:
+                            if event.key == pygame.K_SPACE:
+                                x = True
+                                rejogar = False
+                    pygame.display.update()
+                    
         if button_2.collidepoint((mx, my)):
             if click:
                 pygame.quit()
                 sys.exit()
                 x = False
-        click = False
- 
         mainClock.tick(60)
- 
+
 def game():
     running = True
     while running:
@@ -80,6 +101,7 @@ def game():
         pygame.mixer.music.play(-1)
         meteoro_sound = pygame.mixer.Sound('audios/impact.mp3')
         oxygen_sound = pygame.mixer.Sound('audios/oxygen1.mp3')
+        pygame.mixer.Sound.set_volume(oxygen_sound, 0.1)
 
         score = 0
         font = pygame.font.SysFont('Verdana', 20)
@@ -161,7 +183,12 @@ def game():
             window.blit(texto, (10,10))
             pygame.display.update()
 
-        pygame.quit()
+        # pygame.quit()
         mainClock.tick(60)
         running = False
-main_menu()
+    return score
+
+fim_img = pygame.image.load('imagens/tela_final.png')
+fim = pygame.transform.scale(fim_img, (WIDTH, HEIGHT))
+while True:
+    main_menu()
