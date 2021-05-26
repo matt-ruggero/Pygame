@@ -22,14 +22,20 @@ def main_menu():
         mx, my = pygame.mouse.get_pos()
  
         button_1 = pygame.Rect(240, 200, 100, 15)
+        button_2 = pygame.Rect(240, 230, 100, 15)
         if button_1.collidepoint((mx, my)):
             if click:
                 game()
+        if button_2.collidepoint((mx, my)):
+            if click:
+                pygame.quit()
         menu_img = pygame.image.load('imagens/menu.jpeg').convert()
         window.blit(menu_img, [0, 0])
         menu = pygame.transform.scale(menu_img, (WIDTH, HEIGHT))
         pygame.draw.rect(window, (150, 69, 255,), button_1)
-        draw_text('click to start', font, (255, 255, 255), window, 250, 200) 
+        pygame.draw.rect(window, (200, 69, 69,), button_2)
+        draw_text('click to start', font, (255, 255, 255), window, 250, 200)
+        draw_text('quit game',font,(255,255,255),window,258,230)
         click = False
         for event in pygame.event.get():
             if event.type == QUIT:
