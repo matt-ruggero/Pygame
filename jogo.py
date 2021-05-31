@@ -112,6 +112,7 @@ def game():
         pygame.mixer.Sound.set_volume(oxygen_sound, 0.1)
 
         score = 0
+        lives = 3
         font = pygame.font.SysFont('Verdana', 20)
 
         game = True
@@ -178,6 +179,9 @@ def game():
                     parar_2.append(1)
 
             texto = font.render('Pontuação: {0}'.format(score), True, (255, 255, 255))
+            live = font.render("Lives : " + str(lives), True, (255, 255, 255))
+            text_rect = live.get_rect()
+            text_rect.bottomleft = (10, HEIGHT - 10)
 
             all_grounds.update()
             all_roofs.update()
@@ -201,6 +205,7 @@ def game():
                 astronauta.rect.x -= 20
                 m = Meteoro(meteoro)
                 meteoros_azul.add(m)
+                lives -= 1
                 meteoro_sound.play()
 
             hits = pygame.sprite.spritecollide(astronauta, meteoros_amarelo, True, pygame.sprite.collide_mask)
@@ -209,6 +214,7 @@ def game():
                 astronauta.rect.x -= 20
                 m = Meteoro2(meteoro2)
                 meteoros_amarelo.add(m)
+                lives -= 1
                 meteoro_sound.play()
 
             hits = pygame.sprite.spritecollide(astronauta, meteoros_verde, True, pygame.sprite.collide_mask)
@@ -217,6 +223,7 @@ def game():
                 astronauta.rect.x -= 20
                 m = Meteoro3(meteoro3)
                 meteoros_verde.add(m)
+                lives -= 1
                 meteoro_sound.play()
 
             window.fill((0, 0, 0))
@@ -230,6 +237,7 @@ def game():
             all_roofs.draw(window)
             window.blit(monstro, (-20,0))
             window.blit(texto, (10,10))
+            window.blit(live, text_rect)
             pygame.display.update()
 
         mainClock.tick(60)
