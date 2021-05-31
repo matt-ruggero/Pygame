@@ -137,4 +137,3 @@ class Meteoro3(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.rect.x = 600
             self.rect.y = random.randint(50, 230)
-            self.speedy = random.randint(-2, 2)
