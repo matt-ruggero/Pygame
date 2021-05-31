@@ -90,3 +90,51 @@ class Meteoro(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.rect.x = 600
             self.rect.y = random.randint(50, 230)
+
+class Meteoro2(pygame.sprite.Sprite):
+    def __init__(self, img):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(1000, 1500)
+        self.rect.y = random.randint(50, 230)
+        self.speedx = - 2
+        self.speedy = random.randint(-2, 2)
+
+    def update(self):
+
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+
+        if self.rect.right < 0:
+            self.rect.x = 600
+            self.rect.y = random.randint(50, 230)
+            self.speedy = random.randint(-2, 2)
+        
+        if self.rect.top <= 50:
+            self.rect.top = 50
+            self.speedy = -self.speedy
+
+        if self.rect.bottom >= 270:
+            self.rect.bottom = 270
+            self.speedy = -self.speedy
+
+class Meteoro3(pygame.sprite.Sprite):
+    def __init__(self, img):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(1000, 1500)
+        self.rect.y = random.randint(50, 230)
+        self.speedx = - 4
+
+    def update(self):
+
+        self.rect.x += self.speedx
+
+        if self.rect.right < 0:
+            self.rect.x = 600
+            self.rect.y = random.randint(50, 230)
+            self.speedy = random.randint(-2, 2)
