@@ -100,7 +100,9 @@ class Meteoro2(pygame.sprite.Sprite):
         self.rect.x = random.randint(1000, 1500)
         self.rect.y = random.randint(50, 230)
         self.speedx = - 2
-        self.speedy = random.randint(-2, 2)
+        self.speedy=0
+        while self.speedy==0:
+            self.speedy = random.randint(-2, 2)
 
     def update(self):
 
@@ -110,6 +112,7 @@ class Meteoro2(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.rect.x = 600
             self.rect.y = random.randint(50, 230)
+        while self.speedy==0:
             self.speedy = random.randint(-2, 2)
         
         if self.rect.top <= 50:
