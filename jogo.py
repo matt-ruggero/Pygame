@@ -1,7 +1,6 @@
 import pygame, sys
 from classes import *
 from assets import *
-mainClock = pygame.time.Clock()
 from pygame.locals import *
 pygame.init()
 
@@ -21,7 +20,7 @@ def main_menu():
     x = True
     while x:
         mx, my = pygame.mouse.get_pos()
- 
+
         button_1 = pygame.Rect(240, 200, 100, 15)
         button_2 = pygame.Rect(240, 230, 100, 15)
         menu_img = pygame.image.load('imagens/menu.jpeg').convert()
@@ -80,7 +79,6 @@ def main_menu():
                 pygame.quit()
                 sys.exit()
                 x = False
-        mainClock.tick(60)
 
 def game():
     running = True
@@ -261,7 +259,6 @@ def game():
             window.blit(live, text_rect)
             pygame.display.update()
 
-        mainClock.tick(60)
         running = False
     return score
 
