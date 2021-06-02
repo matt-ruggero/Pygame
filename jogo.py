@@ -50,14 +50,21 @@ def main_menu():
                 x = False
                 rejogar = True
                 while rejogar:
+                    with open('highscore.txt', 'r') as highscore:
+                        maior_score = int(highscore.read())
+                    if maior_score > pontuacao:
+                        with open('highscore.txt', 'w') as hs:
+                            hs.write('{0}'.format(pontuacao))
                     window.blit(fim, (0, 0))
                     pygame.mixer.music.play(0)
                     fonte = pygame.font.SysFont('Verdana', 15)
-                    fonte_2 = pygame.font.SysFont('Verdana', 35)
-                    enter = fonte.render('Pressione SPACE para retornar ao menu principal', True, (255, 255, 255))
+                    fonte_2 = pygame.font.SysFont('Verdana', 25)
+                    space = fonte.render('Pressione SPACE para retornar ao menu principal', True, (255, 255, 255))
                     pontos = fonte_2.render('Pontuação: {0}'.format(pontuacao), True, (255, 255, 255))
-                    window.blit(enter, (130, 200))
-                    window.blit(pontos, (170,240))
+                    pont_maior = fonte_2.render('Highscore: {0}'.format(maior_score), True, (255, 255, 255))
+                    window.blit(space, (130, 200))
+                    window.blit(pontos, (170,230))
+                    window.blit(pont_maior, (170,260))
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             pygame.quit()
@@ -97,7 +104,6 @@ def game():
         mov2_img = pygame.image.load('imagens/movimento2.png').convert_alpha()
         mov2 = pygame.transform.scale(mov2_img, (ASTRO_WIDTH, ASTRO_HEIGHT))
         caminhar = [astronaut, mov1, astronaut, mov2]
-        caminhar_cont = 0
         tanque_o2_img = pygame.image.load('imagens/o2.png')
         tanque_o2 = pygame.transform.scale(tanque_o2_img, (TANQUE_WIDTH, TANQUE_HEIGHT))
         meteoro_img = pygame.image.load('imagens/pedra_azul.png').convert_alpha()
