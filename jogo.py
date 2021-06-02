@@ -92,6 +92,12 @@ def game():
         ground = pygame.transform.scale(ground_img, (GROUND_WIDTH, GROUND_HEIGHT))
         astronaut_img = pygame.image.load('imagens/astronauta_novo.png').convert_alpha()
         astronaut = pygame.transform.scale(astronaut_img, (ASTRO_WIDTH, ASTRO_HEIGHT))
+        mov1_img = pygame.image.load('imagens/movimento1.png').convert_alpha()
+        mov1 = pygame.transform.scale(mov1_img, (ASTRO_WIDTH, ASTRO_HEIGHT))
+        mov2_img = pygame.image.load('imagens/movimento2.png').convert_alpha()
+        mov2 = pygame.transform.scale(mov2_img, (ASTRO_WIDTH, ASTRO_HEIGHT))
+        caminhar = [astronaut, mov1, astronaut, mov2]
+        caminhar_cont = 0
         tanque_o2_img = pygame.image.load('imagens/o2.png')
         tanque_o2 = pygame.transform.scale(tanque_o2_img, (TANQUE_WIDTH, TANQUE_HEIGHT))
         meteoro_img = pygame.image.load('imagens/pedra_azul.png').convert_alpha()
@@ -141,7 +147,7 @@ def game():
             meteor = Meteoro(meteoro)
             meteoros_azul.add(meteor)
 
-        astronauta = Astronaut(astronaut)
+        astronauta = Astronaut(caminhar)
         tanque = Tanque(tanque_o2)
         tanques.add(tanque)
 

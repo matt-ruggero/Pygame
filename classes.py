@@ -36,11 +36,17 @@ class Astronaut(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = img
+        self.frame = 0
+        self.img = img
+
+        self.image = self.img[self.frame]
         self.rect = self.image.get_rect()
         self.rect.centerx = 150
         self.rect.bottom = 300
         self.speedy = 0
+
+        self.frame_ticks = 200
+        self.last_update = pygame.time.get_ticks()
     
     def jump(self):
         self.speedy = -1
@@ -50,12 +56,26 @@ class Astronaut(pygame.sprite.Sprite):
     def update(self):
         self.rect.y += self.speedy
 
+        now = pygame.time.get_ticks()
+        elapsed_ticks = now - self.last_update
+
+        if elapsed_ticks > self.frame_ticks:
+            self.last_update = now
+            self.frame += 1
+
+            if self.frame > 3:
+                self.frame = 0
+
+            self.image = self.img[self.frame]
+
         if self.rect.top <= 50:
             self.rect.top = 50
             self.speedy = 0
         if self.rect.bottom >= 270:
             self.rect.bottom = 270
             self.speedy = 0
+        
+
 
 class Tanque(pygame.sprite.Sprite):
     def __init__(self, img):
