@@ -160,3 +160,31 @@ class Meteoro3(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.rect.x = 600
             self.rect.y = random.randint(50, 230)
+
+class Monstro(pygame.sprite.Sprite):
+    def __init__(self, img):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.frame = 0
+        self.img = img
+
+        self.image = self.img[self.frame]
+        self.rect = self.image.get_rect()
+        self.rect.x = -20
+        self.rect.y = 0
+
+        self.frame_ticks = 300
+        self.last_update = pygame.time.get_ticks()
+
+    def update(self):
+        now = pygame.time.get_ticks()
+        elapsed_ticks = now - self.last_update
+
+        if elapsed_ticks > self.frame_ticks:
+            self.last_update = now
+            self.frame += 1
+
+            if self.frame > 3:
+                self.frame = 0
+
+            self.image = self.img[self.frame]

@@ -114,6 +114,13 @@ def game():
         meteoro3 = pygame.transform.scale(meteoro3_img, (METEORO3_WIDTH, METEORO3_HEIGHT))
         monstro_img = pygame.image.load('imagens/monstro.png')
         monstro = pygame.transform.scale(monstro_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
+        monstro2_img = pygame.image.load('imagens/frame_1.png')
+        monstro2 = pygame.transform.scale(monstro2_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
+        monstro3_img = pygame.image.load('imagens/frame_2.png')
+        monstro3 = pygame.transform.scale(monstro3_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
+        monstro4_img = pygame.image.load('imagens/frame_3.png')
+        monstro4 = pygame.transform.scale(monstro4_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
+        monstro_anim = [monstro, monstro2, monstro3, monstro4]
 
         # Carrega os sons do jogo
         pygame.mixer.music.load('audios/space.mp3')
@@ -156,6 +163,7 @@ def game():
         astronauta = Astronaut(caminhar)
         tanque = Tanque(tanque_o2)
         tanques.add(tanque)
+        monstroo = Monstro(monstro_anim)
 
         parar = []
         parar_2 = []
@@ -198,6 +206,7 @@ def game():
             all_grounds.update()
             all_roofs.update()
             astronauta.update()
+            monstroo.update()
             tanques.update()
             meteoros_azul.update()
             meteoros_verde.update()
@@ -247,7 +256,7 @@ def game():
             meteoros_verde.draw(window)
             all_grounds.draw(window)
             all_roofs.draw(window)
-            window.blit(monstro, (-20,0))
+            window.blit(monstroo.image, monstroo.rect)
             window.blit(texto, (10,10))
             window.blit(live, text_rect)
             pygame.display.update()
