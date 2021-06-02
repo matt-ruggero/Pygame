@@ -52,7 +52,7 @@ def main_menu():
                 while rejogar:
                     with open('highscore.txt', 'r') as highscore:
                         maior_score = int(highscore.read())
-                    if maior_score > pontuacao:
+                    if maior_score < pontuacao:
                         with open('highscore.txt', 'w') as hs:
                             hs.write('{0}'.format(pontuacao))
                     window.blit(fim, (0, 0))
