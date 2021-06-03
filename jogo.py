@@ -116,9 +116,7 @@ def game():
         monstro2 = pygame.transform.scale(monstro2_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
         monstro3_img = pygame.image.load('imagens/frame_2.png')
         monstro3 = pygame.transform.scale(monstro3_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
-        monstro4_img = pygame.image.load('imagens/frame_3.png')
-        monstro4 = pygame.transform.scale(monstro4_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
-        monstro_anim = [monstro, monstro2, monstro3, monstro4]
+        monstro_anim = [monstro3, monstro, monstro2, monstro]
 
         # Carrega os sons do jogo
         pygame.mixer.music.load('audios/space.mp3')
