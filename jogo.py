@@ -120,13 +120,19 @@ def game():
         heart_img = pygame.image.load('imagens/coracao.png')
         heart = pygame.transform.scale(heart_img, (30, 30))
 
+        lives = 3
+        
         # Carrega os sons do jogo
-        pygame.mixer.music.load('audios/space.mp3')
-        pygame.mixer.music.set_volume(0.4)
-        pygame.mixer.music.play(-1)
+        if lives > 1:
+            pygame.mixer.music.load('audios/space.mp3')
+            pygame.mixer.music.set_volume(0.4)
+            pygame.mixer.music.play(lives > 1)
+        
         meteoro_sound = pygame.mixer.Sound('audios/impact.mp3')
         oxygen_sound = pygame.mixer.Sound('audios/oxygen1.mp3')
         pygame.mixer.Sound.set_volume(oxygen_sound, 0.1)
+        vida = pygame.mixer.Sound('audios/1vida.mp3')
+        pygame.mixer.Sound.set_volume(vida, 0.4)
 
         def draw_lives(surf, x, y, lives, img):
             for i in range(lives):
@@ -136,7 +142,6 @@ def game():
                 surf.blit(img, img_rect)
 
         score = 0
-        lives = 3
         font = pygame.font.SysFont('Verdana', 20)
 
         game = True
@@ -204,9 +209,6 @@ def game():
                     parar_2.append(1)
 
             texto = font.render('Pontuação: {0}'.format(score), True, (255, 255, 255))
-            #live = font.render("Lives : " + str(lives), True, (255, 255, 255))
-            #text_rect = live.get_rect()
-            #text_rect.bottomleft = (10, HEIGHT - 10)
 
             all_grounds.update()
             all_roofs.update()
@@ -252,6 +254,13 @@ def game():
                 lives -= 1
                 meteoro_sound.play()  
 
+            if lives == 1:
+                pygame.mixer.music.stop()
+                vida.play(-1)
+
+            if lives == 0:
+                vida.stop()
+
             window.fill((0, 0, 0))
             window.blit(background, (0, 0))
             window.blit(astronauta.image, astronauta.rect)
@@ -263,8 +272,6 @@ def game():
             all_roofs.draw(window)
             window.blit(monstroo.image, monstroo.rect)
             window.blit(texto, (10,10))
-            #window.blit(live, text_rect)
-            #window.blit(heart1, (10, 30))
             draw_lives(window, 10, 30, lives, heart)
             pygame.display.update()
         if lives == 0:
