@@ -1,13 +1,18 @@
+#Importa bibliotecas
 import pygame, sys
 from classes import *
 from assets import *
 from pygame.locals import *
+
+#Inicia Pygame
 pygame.init()
 
+#Define a janela e nome do jogo
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Zero Gravity Run')
 font = pygame.font.SysFont(None, 20)
 
+#Função para texto dos botões
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
@@ -16,6 +21,7 @@ def draw_text(text, font, color, surface, x, y):
 
 click = False
  
+#Função para tela de início e fim
 def main_menu():
     x = True
     while x:
@@ -49,12 +55,16 @@ def main_menu():
                 x = False
                 rejogar = True
                 while rejogar:
-                    with open('highscore.txt', 'r') as highscore:
+                    #Define a pontuação mais alta
+                    with open('highscore.txt', 'r') as highscore: 
                         maior_score = int(highscore.read())
                     if maior_score < pontuacao:
                         with open('highscore.txt', 'w') as hs:
                             hs.write('{0}'.format(pontuacao))
-                    window.blit(fim, (0, 0))
+                    #_______________________________
+
+                    #Define e mostra a tela de GAME OVER
+                    window.blit(fim, (0, 0)) 
                     pygame.mixer.music.play(0)
                     fonte = pygame.font.SysFont('Verdana', 15)
                     fonte_2 = pygame.font.SysFont('Verdana', 25)
@@ -64,6 +74,9 @@ def main_menu():
                     window.blit(space, (130, 200))
                     window.blit(pontos, (170,230))
                     window.blit(pont_maior, (170,260))
+                    #_______________________________
+                    
+                    #Finalizar jogo
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             pygame.quit()
@@ -80,13 +93,12 @@ def main_menu():
                 sys.exit()
                 x = False
 
+#Função do jogo
 def game():
     running = True
     while running:
-
-        window = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption('Zero Gravity Run')
-
+        
+        #Carrega imagens
         background_img = pygame.image.load('imagens/background.jpeg').convert()
         background = pygame.transform.scale(background_img, (WIDTH, HEIGHT))
         background2_img = pygame.image.load('imagens/fundo_amarelo.jpeg').convert()
@@ -120,20 +132,24 @@ def game():
         heart_img = pygame.image.load('imagens/coracao.png')
         heart = pygame.transform.scale(heart_img, (30, 30))
 
+        #Define quantidade de vidas
         lives = 3
-        
+
         # Carrega os sons do jogo
+        #Som de background com mais de 1 vida
         if lives > 1:
             pygame.mixer.music.load('audios/space.mp3')
             pygame.mixer.music.set_volume(0.4)
             pygame.mixer.music.play(lives > 1)
         
+        #Sons de efeitos sonoros
         meteoro_sound = pygame.mixer.Sound('audios/impact.mp3')
         oxygen_sound = pygame.mixer.Sound('audios/oxygen1.mp3')
         pygame.mixer.Sound.set_volume(oxygen_sound, 0.1)
         vida = pygame.mixer.Sound('audios/1vida.mp3')
         pygame.mixer.Sound.set_volume(vida, 0.4)
 
+        #Função que desenha as vidas na tela do jogo
         def draw_lives(surf, x, y, lives, img):
             for i in range(lives):
                 img_rect = img.get_rect()
@@ -141,14 +157,17 @@ def game():
                 img_rect.y = y + 30 * i
                 surf.blit(img, img_rect)
 
+        #Define a pontuação inicial
         score = 0
         font = pygame.font.SysFont('Verdana', 20)
 
         game = True
 
+        #Define FPS do jogo
         clock = pygame.time.Clock()
         FPS = 100
 
+        #Cria grupos de Sprites
         tanques = pygame.sprite.Group()
         meteoros_azul = pygame.sprite.Group()
         all_grounds = pygame.sprite.Group()
@@ -156,6 +175,7 @@ def game():
         meteoros_verde = pygame.sprite.Group()
         meteoros_amarelo = pygame.sprite.Group()
 
+        #Cria os Sprites e coloca nos grupos
         for i in range(0, 650, 50):
             pedra = Ground(ground)
             pedra.rect.x += i
@@ -178,20 +198,24 @@ def game():
         parar = []
         parar_2 = []
 
+        #Loop do jogo
         while game:
             clock.tick(FPS)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     game = False
-                elif event.type == pygame.KEYDOWN:
+                #Define a movimentação
+                elif event.type == pygame.KEYDOWN: 
                     if event.key == pygame.K_UP:
                         astronauta.jump()
                     if event.key == pygame.K_DOWN:
                         astronauta.fall()
 
+            #Condição de derrota
             if astronauta.rect.centerx == 90:
                 game = False
             
+            #Mudança de fases
             if score == 100:
                 background = background2
                 if parar == []:
@@ -208,8 +232,10 @@ def game():
                         meteoros_verde.add(meteor)
                     parar_2.append(1)
 
+            #Mostra pontuação na tela
             texto = font.render('Pontuação: {0}'.format(score), True, (255, 255, 255))
 
+            #Atualiza a posição de todos os Sprites
             all_grounds.update()
             all_roofs.update()
             astronauta.update()
@@ -219,6 +245,7 @@ def game():
             meteoros_verde.update()
             meteoros_amarelo.update()
 
+            #Define eventos para pontuação 
             hits = pygame.sprite.spritecollide(astronauta, tanques, True, pygame.sprite.collide_mask)
 
             for tanque in hits:
@@ -227,6 +254,7 @@ def game():
                 score += 10
                 oxygen_sound.play()
 
+            #Define eventos para danos 
             hits = pygame.sprite.spritecollide(astronauta, meteoros_azul, True, pygame.sprite.collide_mask)
 
             for meteor in hits:
@@ -254,13 +282,16 @@ def game():
                 lives -= 1
                 meteoro_sound.play()  
 
+            #Troca trilha sonora para quando tem 1 vida
             if lives == 1:
                 pygame.mixer.music.stop()
                 vida.play(-1)
 
+            #Troca música de 1 vida para a música inicial
             if lives == 0:
                 vida.stop()
 
+            #Desenha os Sprites na tela
             window.fill((0, 0, 0))
             window.blit(background, (0, 0))
             window.blit(astronauta.image, astronauta.rect)
@@ -274,11 +305,15 @@ def game():
             window.blit(texto, (10,10))
             draw_lives(window, 10, 30, lives, heart)
             pygame.display.update()
+        #Condição de finaização do jogo
         if lives == 0:
             running = False
     return score
 
+#Define a imagem de GAME OVER
 fim_img = pygame.image.load('imagens/tela_final.png')
 fim = pygame.transform.scale(fim_img, (WIDTH, HEIGHT))
+
+#Roda o jogo 
 while True:
     main_menu()
