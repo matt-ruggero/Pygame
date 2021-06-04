@@ -117,6 +117,8 @@ def game():
         monstro3_img = pygame.image.load('imagens/frame_2.png')
         monstro3 = pygame.transform.scale(monstro3_img, (MONSTRO_WIDTH, MONSTRO_HEIGHT))
         monstro_anim = [monstro3, monstro, monstro2, monstro]
+        heart_img = pygame.image.load('imagens/coracao.png')
+        heart = pygame.transform.scale(heart_img, (30, 30))
 
         # Carrega os sons do jogo
         pygame.mixer.music.load('audios/space.mp3')
@@ -125,6 +127,13 @@ def game():
         meteoro_sound = pygame.mixer.Sound('audios/impact.mp3')
         oxygen_sound = pygame.mixer.Sound('audios/oxygen1.mp3')
         pygame.mixer.Sound.set_volume(oxygen_sound, 0.1)
+
+        def draw_lives(surf, x, y, lives, img):
+            for i in range(lives):
+                img_rect = img.get_rect()
+                img_rect.x = x
+                img_rect.y = y + 30 * i
+                surf.blit(img, img_rect)
 
         score = 0
         lives = 3
@@ -195,9 +204,9 @@ def game():
                     parar_2.append(1)
 
             texto = font.render('Pontuação: {0}'.format(score), True, (255, 255, 255))
-            live = font.render("Lives : " + str(lives), True, (255, 255, 255))
-            text_rect = live.get_rect()
-            text_rect.bottomleft = (10, HEIGHT - 10)
+            #live = font.render("Lives : " + str(lives), True, (255, 255, 255))
+            #text_rect = live.get_rect()
+            #text_rect.bottomleft = (10, HEIGHT - 10)
 
             all_grounds.update()
             all_roofs.update()
@@ -224,7 +233,7 @@ def game():
                 meteoros_azul.add(m)
                 lives -= 1
                 meteoro_sound.play()
-
+            
             hits = pygame.sprite.spritecollide(astronauta, meteoros_amarelo, True, pygame.sprite.collide_mask)
 
             for meteor in hits:
@@ -233,7 +242,7 @@ def game():
                 meteoros_amarelo.add(m)
                 lives -= 1
                 meteoro_sound.play()
-
+                
             hits = pygame.sprite.spritecollide(astronauta, meteoros_verde, True, pygame.sprite.collide_mask)
 
             for meteor in hits:
@@ -241,7 +250,7 @@ def game():
                 m = Meteoro3(meteoro3)
                 meteoros_verde.add(m)
                 lives -= 1
-                meteoro_sound.play()
+                meteoro_sound.play()  
 
             window.fill((0, 0, 0))
             window.blit(background, (0, 0))
@@ -254,10 +263,12 @@ def game():
             all_roofs.draw(window)
             window.blit(monstroo.image, monstroo.rect)
             window.blit(texto, (10,10))
-            window.blit(live, text_rect)
+            #window.blit(live, text_rect)
+            #window.blit(heart1, (10, 30))
+            draw_lives(window, 10, 30, lives, heart)
             pygame.display.update()
-
-        running = False
+        if lives == 0:
+            running = False
     return score
 
 fim_img = pygame.image.load('imagens/tela_final.png')
