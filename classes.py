@@ -1,7 +1,8 @@
 from assets import *
 import pygame
-import random
+import random #Importa as bibliotecas
 
+#Define a classe do chão
 class Ground(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
@@ -17,6 +18,7 @@ class Ground(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.rect.x = WIDTH
 
+#Define a classe do teto
 class Roof(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
@@ -32,6 +34,7 @@ class Roof(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.rect.x = WIDTH
 
+#Define a classe do astronauta
 class Astronaut(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
@@ -75,8 +78,7 @@ class Astronaut(pygame.sprite.Sprite):
             self.rect.bottom = 270
             self.speedy = 0
         
-
-
+#Define a classe do tanque de oxigênio
 class Tanque(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
@@ -94,6 +96,7 @@ class Tanque(pygame.sprite.Sprite):
             self.rect.x = WIDTH
             self.rect.y = random.randint(80, 230)
 
+#Define a classe do meteoro roxo (fase 1)
 class Meteoro(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
@@ -111,6 +114,7 @@ class Meteoro(pygame.sprite.Sprite):
             self.rect.x = 600
             self.rect.y = random.randint(50, 230)
 
+#Define a classe do meteoro amarelo (fase 2)
 class Meteoro2(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
@@ -132,6 +136,7 @@ class Meteoro2(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.rect.x = 600
             self.rect.y = random.randint(50, 230)
+
         while self.speedy==0:
             self.speedy = random.randint(-2, 2)
         
@@ -143,6 +148,7 @@ class Meteoro2(pygame.sprite.Sprite):
             self.rect.bottom = 270
             self.speedy = -self.speedy
 
+#Define a classe do meteoro verde (fase 3)
 class Meteoro3(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
@@ -161,6 +167,7 @@ class Meteoro3(pygame.sprite.Sprite):
             self.rect.x = 600
             self.rect.y = random.randint(50, 230)
 
+#Define a classe do monstro
 class Monstro(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)

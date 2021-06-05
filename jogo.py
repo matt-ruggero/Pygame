@@ -62,7 +62,7 @@ def main_menu():
                         with open('highscore.txt', 'w') as hs:
                             hs.write('{0}'.format(pontuacao))
                     #_______________________________
-
+                    
                     #Define e mostra a tela de GAME OVER
                     window.blit(fim, (0, 0)) 
                     pygame.mixer.music.play(0)
@@ -91,14 +91,13 @@ def main_menu():
             if click:
                 pygame.quit()
                 sys.exit()
-                x = False
 
 #Função do jogo
 def game():
     running = True
     while running:
         
-        #Carrega imagens
+        #Carrega as imagens
         background_img = pygame.image.load('imagens/background.jpeg').convert()
         background = pygame.transform.scale(background_img, (WIDTH, HEIGHT))
         background2_img = pygame.image.load('imagens/fundo_amarelo.jpeg').convert()
