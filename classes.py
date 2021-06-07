@@ -88,7 +88,7 @@ class Tanque(pygame.sprite.Sprite):
         self.rect.x = WIDTH
         self.rect.y = random.randint(50, 230)
 
-        self.speedx = - 1
+        self.speedx = -1
 
     def update(self):
         self.rect.x += self.speedx
@@ -123,7 +123,7 @@ class Meteoro2(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(1000, 1500)
         self.rect.y = random.randint(50, 230)
-        self.speedx = - 2
+        self.speedx = -2
         self.speedy=0
         while self.speedy==0:
             self.speedy = random.randint(-2, 2)
@@ -140,8 +140,8 @@ class Meteoro2(pygame.sprite.Sprite):
         while self.speedy==0:
             self.speedy = random.randint(-2, 2)
         
-        if self.rect.top <= 50:
-            self.rect.top = 50
+        if self.rect.top <= 40:
+            self.rect.top = 40
             self.speedy = -self.speedy
 
         if self.rect.bottom >= 270:
