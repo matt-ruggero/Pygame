@@ -196,12 +196,13 @@ def game():
 
         parar = []
         parar_2 = []
-
+        parar_3 = []
         #Loop do jogo
         while game:
             clock.tick(FPS)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    lives=0
                     game = False
                 #Define a movimentação
                 elif event.type == pygame.KEYDOWN: 
@@ -215,18 +216,22 @@ def game():
                 game = False
             
             #Mudança de fases
-            if score == 100:
+            if score == 70:
                 background = background2
                 if parar == []:
-                    for i in range(2):
+                    lives+=1
+                    astronauta.rect.x += 20
+                    for i in range(1):
                         meteor = Meteoro2(meteoro2)
                         meteoros_amarelo.add(meteor)
                     parar.append(1)
             
-            if score == 200: 
+            if score == 140: 
                 background = background3
                 if parar_2 == []:
-                    for i in range(3):
+                    lives+=1
+                    astronauta.rect.x += 20
+                    for i in range(2):
                         meteor = Meteoro3(meteoro3)
                         meteoros_verde.add(meteor)
                     parar_2.append(1)
@@ -285,6 +290,13 @@ def game():
             if lives == 1:
                 pygame.mixer.music.stop()
                 vida.play(-1)
+                parar_3=[]
+            if lives >1:
+                if parar_3==[]:
+                    parar_3.append(1)
+                    pygame.mixer.music.play() 
+                vida.stop()
+                
 
             #Troca música de 1 vida para a música inicial
             if lives == 0:
