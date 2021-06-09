@@ -1,9 +1,9 @@
 # Pygame
 Jogo criado para o curso de Design de Software por Guilherme Pinheiro, Julia Toyama e Mateus Ruggero
 
-~~~~~~~~~~~~~~~~~~~~ ZERO GRAVITY RUN ~~~~~~~~~~~~~~~~~~~~~~
+### ZERO GRAVITY RUN  
 
-DESCRIÇÃO -------------------------------------------------------------------------------------
+DESCRIÇÃO
 Contexto: 
 O jogo retrata um astronauta que deve obter os tanques de oxigênio para ganho de pontos (10 pontos cada tanque) e desviar dos meteoros. 
 O astronauta tem 3 vidas, cada vez que é atingido por um meteoro ele perde uma vida.
