@@ -27,15 +27,19 @@ Quando perde todas as vidas ele é pego pelo monstro e o jogo muda para uma tela
 Para iniciar o jogo você deve:
 1.  importar a biblioteca pygame, aqui está um link que pode ajudar com isso: https://www.pygame.org/wiki/GettingStarted 
 2. rodar o arquivo jogo.py que irá abrir a tela de jogo e clicar com o mouse em jogar. 
+
 O astronauta é movido pelas setas para cima e para baixo do teclado. 
 Após o GAME OVER para jogar novamente deve-se apertar a barra de espaço para retornar a tela principal ou simplesmente fechar a tela de jogo.
-O jogo tem 3 níveis, a cada 70 pontos você passa para o próximo, 
-o primeiro tem apenas um tipo de meteoro o roxo que surge aleatoriamente e segue treajetória retilínea.
+O jogo tem 3 níveis, a cada 70 pontos você passa para o próximo. 
+
+O primeiro tem apenas um tipo de meteoro o roxo que surge aleatoriamente e segue treajetória retilínea.
 
 ![alt text](imagens/Nivel1.png)
+
 O segundo começa a ter os meteoros amarelos que tem trajetória de zigue zague. 
 
 ![alt text](imagens/Nivel2.png)
+
 Já no último nível surgem os meteoros verdes que são bem pequenos e vem em maior quantidade. 
 
 ![alt text](imagens/Nivel3.png)
